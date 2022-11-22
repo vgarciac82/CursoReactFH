@@ -1,53 +1,44 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import { AddCategory } from '../../src/components/AddCategory';
+import { fireEvent, render, screen } from "@testing-library/react";
+import { AddCategory } from "../../src/components/AddCategory";
 
+describe("Pruebas en <AddCategory />", () => {
+  test("debe de cambiar el valor de la caja de texto", () => {
+    render(<AddCategory onNewCategory={() => {}} />);
+    const input = screen.getByRole("textbox");
+    fireEvent.change(input, { target: { value: "Saitama" } });
+    expect(input.value).toBe("Saitama");
+  });
 
-describe('Pruebas en <AddCategory />', () => {
-    
-    test('debe de cambiar el valor de la caja de texto', () => {
-        
-        render( <AddCategory onNewCategory={ () => {} } /> );
-        const input = screen.getByRole('textbox');
+  test("debe de llamar onNewCategory si el input tiene un valor", () => {
+    const inputValue = "Saitama";
 
-        fireEvent.input( input, { target: { value: 'Saitama' } });
+    const onNewCategory = jest.fn();
 
-        expect( input.value ).toBe('Saitama');
+    render(<AddCategory onNewCategory={onNewCategory} />);
 
-    });
+    const input = screen.getByRole("textbox");
+    const form = screen.getByRole("form");
 
-    test('debe de llamar onNewCategory si el input tiene un valor', () => {
-        
-        const inputValue    = 'Saitama';
-        const onNewCategory = jest.fn();
+    fireEvent.change(input, { target: { value: inputValue } });
+    fireEvent.submit(form);
 
-        render( <AddCategory onNewCategory={ onNewCategory } /> );
+    expect(input.value).toBe("");
+    expect(onNewCategory).toHaveBeenCalled();
+    expect(onNewCategory).toHaveBeenCalledTimes(1);
+    expect(onNewCategory).toHaveBeenCalledWith(inputValue);
 
-        const input = screen.getByRole('textbox');
-        const form  = screen.getByRole('form');
+    screen.debug();
+  });
 
-        fireEvent.input( input, { target: { value: inputValue } });
-        fireEvent.submit( form );
-        // screen.debug();
-        expect( input.value ).toBe('');
+  test("No debe de llamar onNewCategory si el valor esta vacio", () => {
+    const onNewCategory = jest.fn();
 
-        expect( onNewCategory ).toHaveBeenCalled();
-        expect( onNewCategory ).toHaveBeenCalledTimes(1);
-        expect( onNewCategory ).toHaveBeenCalledWith( inputValue );
+    render(<AddCategory onNewCategory={onNewCategory} />);
 
-    });
+    const form = screen.getByRole("form");
 
-    test('no debe de llamar el onNewCategory si el input está vació', () => {
-        
-        const onNewCategory = jest.fn();
-        render( <AddCategory onNewCategory={ onNewCategory } /> );
+    fireEvent.submit(form);
 
-        const form = screen.getByRole('form');
-        fireEvent.submit( form );
-
-        expect( onNewCategory ).toHaveBeenCalledTimes(0);
-        expect( onNewCategory ).not.toHaveBeenCalled();
-
-    });
-
-
+    expect(onNewCategory).not.toHaveBeenCalled();
+  });
 });
