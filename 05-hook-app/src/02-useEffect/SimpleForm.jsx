@@ -1,22 +1,14 @@
 import { useEffect, useState } from "react";
+import { useForm } from "../hooks/useForm";
 import { Message } from "./Message";
 export const SimpleForm = () => {
-  const [formState, setFormState] = useState({
-    userName: "Cherlux",
-    email: "cherlux@gmail.com",
+  const { formState, handleInputChange, userName, email, password, resetForm } = useForm({
+    userName: "",
+    email: "",
+    password: "",
   });
 
-  const { userName, email } = formState;
-
-  const handleInputChange = ({ target }) => {
-    const { name, value } = target;
-
-     
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
-  };
+  //const { userName, email, password } = formState;
 
   useEffect(() => {
     //console.log("hey!");
@@ -32,7 +24,7 @@ export const SimpleForm = () => {
 
   return (
     <div>
-      <h1>Simple Form</h1>
+      <h1>Formulario con Custom Hook</h1>
       <hr></hr>
       <input
         type="text"
@@ -42,7 +34,6 @@ export const SimpleForm = () => {
         name="userName"
         onChange={handleInputChange}
       />
-
       <input
         type="email"
         className="form-control mt-2"
@@ -51,7 +42,16 @@ export const SimpleForm = () => {
         value={email}
         onChange={handleInputChange}
       />
-      {userName === "cherlo" && <Message />}
+      <input
+        type="password"
+        className="form-control mt-2"
+        placeholder="password"
+        name="password"
+        value={password}
+        onChange={handleInputChange}
+      />
+
+      <button className="btn btn-primary mt-2" onClick={resetForm}>Reset</button>
     </div>
   );
 };
