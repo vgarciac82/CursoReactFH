@@ -1,11 +1,12 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
-import { Padre } from "./06-memos/07-tarea-memo/Padre"; 
+import ReactDOM from "react-dom/client"; 
+import { TodoApp } from "./08-useReducer/TodoApp";
+
  
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Padre />
+    <TodoApp />
   </React.StrictMode>
 );
