@@ -4,8 +4,11 @@ import { Padre } from "./06-memos/07-tarea-memo/Padre";
  
 import "./index.css";
 
+import './08-useReducer/intro-reducer'
+/*
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Padre />
   </React.StrictMode>
 );
+*/
