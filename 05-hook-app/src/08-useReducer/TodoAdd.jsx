@@ -9,7 +9,7 @@ export const TodoAdd = ({ onNewTodo }) => {
         const newTodo = {
             id: new Date().getTime(),
             done: false,
-            description: description
+            description: description,
         }
 
         onNewTodo(newTodo);
@@ -17,11 +17,15 @@ export const TodoAdd = ({ onNewTodo }) => {
     }
     return (
         <form onSubmit={onFormSubmit}>
-            <input type="text" placeholder="Que hay que hacer?" className="form-control"
-
-                onChange={handleInputChange}
-                value={description}
+            <input 
+                type="text" 
+                placeholder="Que hay que hacer?" 
+                className="form-control"
                 name="description"
+                value={description}
+                onChange={handleInputChange}
+                
+                
 
             />
             <button type="submit" className="btn btn-outline-primary mt-1">Agregar</button>
